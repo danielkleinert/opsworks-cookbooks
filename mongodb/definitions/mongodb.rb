@@ -114,8 +114,7 @@ define :mongodb_instance, :mongodb_type => "mongod",
     supports :status => true, :restart => true
     action :nothing
   end
-
-
+ 
   # default file
   template "#{node['mongodb']['defaults_dir']}/#{name}" do
     action :create
@@ -177,8 +176,8 @@ define :mongodb_instance, :mongodb_type => "mongod",
     #notifies :restart, "service[#{name}]"
     notifies :restart, resources(:service => name)
   end
-
-   # replicaset
+  
+  # replicaset
   if !replicaset_name.nil? && node['mongodb']['auto_configure']['replicaset']
     if Chef::Config[:solo]
       rs_nodes = [node]
@@ -200,7 +199,7 @@ define :mongodb_instance, :mongodb_type => "mongod",
       action :nothing
     end
   end
-  
+
   # service
   service name do
     #supports :status => true, :restart => true
@@ -210,7 +209,7 @@ define :mongodb_instance, :mongodb_type => "mongod",
     end
     if !replicaset_name.nil? && node['mongodb']['auto_configure']['replicaset']
       #notifies :create, "ruby_block[config_replicaset]"
-      notifies :create, resources(:ruby_block => "config_replicaset"),
+      notifies :create, resources(:ruby_block => "config_replicaset")
     end
     if type == "mongos" && node['mongodb']['auto_configure']['sharding']
       notifies :create, "ruby_block[config_sharding]", :immediately
@@ -220,7 +219,6 @@ define :mongodb_instance, :mongodb_type => "mongod",
       ignore_failure true
     end
   end
-  
   
   # sharding
   if type == "mongos" && node['mongodb']['auto_configure']['sharding']

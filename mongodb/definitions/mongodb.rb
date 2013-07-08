@@ -108,6 +108,12 @@ define :mongodb_instance, :mongodb_type => "mongod",
       mode "0644"
     end
   end
+
+  # service
+  service name do
+    supports :status => true, :restart => true
+    action :nothing
+  end
  
   # default file
   template "#{node['mongodb']['defaults_dir']}/#{name}" do
@@ -155,12 +161,6 @@ define :mongodb_instance, :mongodb_type => "mongod",
       action :create
       recursive true
     end
-  end
-  
-  # service
-  service name do
-    supports :status => true, :restart => true
-    action :nothing
   end
 
   # init script

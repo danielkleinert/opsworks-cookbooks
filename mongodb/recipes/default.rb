@@ -27,15 +27,9 @@ end
 #chef_gem 'bson_ext'
 #chef_gem 'mongo'
 
-gem_package 'bson_ext' do
-  action :nothing
-end.run_action(:install)
-Gem.clear_paths
+OpsWorks::InternalGems.internal_gem_package('bson_ext')
+OpsWorks::InternalGems.internal_gem_package('mongo')
 
-gem_package 'mongo' do
-  action :nothing
-end.run_action(:install)
-Gem.clear_paths
 
 if node.recipe?("mongodb::default") or node.recipe?("mongodb")
   # configure default instance

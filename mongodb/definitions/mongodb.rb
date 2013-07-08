@@ -114,6 +114,10 @@ define :mongodb_instance, :mongodb_type => "mongod",
     supports :status => true, :restart => true
     action :nothing
   end
+
+  ruby_block "config_replicaset" do
+    action :nothing
+  end
  
   # default file
   template "#{node['mongodb']['defaults_dir']}/#{name}" do

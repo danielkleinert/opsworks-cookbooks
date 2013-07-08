@@ -30,3 +30,17 @@ if node.recipe?("mongodb::default") or node.recipe?("mongodb")
     auth         node['mongodb']['auth']
   end
 end
+
+# if we are configuring a shard as a replicaset we do nothing in this recipe
+if !node.recipe?("mongodb::shard")
+  mongodb_instance "mongodb" do
+    mongodb_type "mongod"
+    port         node['mongodb']['port']
+    logpath      node['mongodb']['logpath']
+    dbpath       node['mongodb']['dbpath']
+    replicaset   node
+    enable_rest  node['mongodb']['enable_rest']
+    smallfiles   node['mongodb']['smallfiles']
+    auth         node['mongodb']['auth']
+  end
+end

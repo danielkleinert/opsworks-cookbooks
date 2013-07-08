@@ -157,6 +157,12 @@ define :mongodb_instance, :mongodb_type => "mongod",
     end
   end
   
+  # service
+  service name do
+    supports :status => true, :restart => true
+    action :nothing
+  end
+
   # init script
   template "#{node['mongodb']['init_dir']}/#{name}" do
     action :create
@@ -171,7 +177,7 @@ define :mongodb_instance, :mongodb_type => "mongod",
   
   # service
   service name do
-    supports :status => true, :restart => true
+    #supports :status => true, :restart => true
     action service_action
     service_notifies.each do |service_notify|
       notifies :run, service_notify

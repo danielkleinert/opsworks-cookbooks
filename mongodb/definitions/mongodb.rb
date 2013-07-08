@@ -140,7 +140,8 @@ define :mongodb_instance, :mongodb_type => "mongod",
       "smallfiles" => params[:smallfiles],
       "auth" => auth
     )
-    notifies :restart, "service[#{name}]"
+    #notifies :restart, "service[#{name}]"
+    notifies :restart, resources(:service => name)
   end
 
   # log dir [make sure it exists]
@@ -172,7 +173,8 @@ define :mongodb_instance, :mongodb_type => "mongod",
     owner "root"
     mode "0755"
     variables :provides => name
-    notifies :restart, "service[#{name}]"
+    #notifies :restart, "service[#{name}]"
+    notifies :restart, resources(:service => name)
   end
   
   # service

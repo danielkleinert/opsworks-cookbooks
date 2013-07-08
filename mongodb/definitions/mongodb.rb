@@ -185,7 +185,8 @@ define :mongodb_instance, :mongodb_type => "mongod",
       notifies :run, service_notify
     end
     if !replicaset_name.nil? && node['mongodb']['auto_configure']['replicaset']
-      notifies :create, "ruby_block[config_replicaset]"
+      #notifies :create, "ruby_block[config_replicaset]"
+      notifies :create, resources(:ruby_block => "config_replicaset")
     end
     if type == "mongos" && node['mongodb']['auto_configure']['sharding']
       notifies :create, "ruby_block[config_sharding]", :immediately

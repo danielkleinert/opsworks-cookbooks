@@ -19,16 +19,6 @@
 #
 
 
-=begin
-[Mon, 08 Jul 2013 13:50:16 +0000] DEBUG: Loading cookbook chef-mongodb's providers from /opt/aws/opsworks/current/site-cookbooks/chef-mongodb/providers/user.rb
-[Mon, 08 Jul 2013 13:50:16 +0000] ERROR: ruby_block[Load the custom cookbooks] (/opt/aws/opsworks/releases/20130628172708_125/cookbooks/opsworks_custom_cookbooks/recipes/load.rb:10:in `from_file') had an error:
-wrong constant name Chef-mongodbUser
-/opt/aws/opsworks/releases/20130628172708_125/vendor/bundle/ruby/1.8/gems/chef-0.9.15.5/bin/../lib/chef/provider.rb:89:in `const_defined?'
-/opt/aws/opsworks/releases/20130628172708_125/vendor/bundle/ruby/1.8/gems/chef-0.9.15.5/bin/../lib/chef/provider.rb:89:in `build_from_file'
-/opt/aws/opsworks/releases/20130628172708_125/vendor/bundle/ruby/1.8/gems/chef-0.9.15.5/bin/../lib/chef/run_context.rb:66:in `load'
-=end
-
-=begin
 action :add do
   unless Chef::MongoDB.user_exists?(node, new_resource.name, new_resource.password, new_resource.database)
     Chef::MongoDB.configure_user(node, new_resource.name, new_resource.password, new_resource.database)
@@ -42,4 +32,3 @@ end
 action :update do
   Chef::MongoDB.configure_user(node, new_resource.name, new_resource.password, new_resource.database)
 end
-=end

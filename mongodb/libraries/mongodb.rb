@@ -99,6 +99,8 @@ class Chef
             "members" => node['mongodb']['use_fqdn'] == false ? rs_member_ips : rs_members
         }
 
+        Chef::Log.info("cmd: #{cmd}")
+
         begin
           result = admin.command(cmd, :check_response => false)
         rescue Mongo::OperationTimeout

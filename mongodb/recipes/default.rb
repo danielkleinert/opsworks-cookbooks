@@ -27,8 +27,8 @@ end
 #chef_gem 'bson_ext'
 #chef_gem 'mongo'
 
-OpsWorks::InternalGems.internal_gem_package('bson_ext')
-OpsWorks::InternalGems.internal_gem_package('mongo')
+OpsWorks::InternalGems.internal_gem_package('bson_ext', :version => '1.9.0')
+OpsWorks::InternalGems.internal_gem_package('mongo', :version => '1.9.0')
 
 
 if node.recipe?("mongodb::default") or node.recipe?("mongodb")

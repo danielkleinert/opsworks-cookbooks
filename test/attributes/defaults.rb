@@ -8,11 +8,11 @@ if node[:opsworks][:layers][:arbiter] != 0 and not node[:opsworks][:layers][:arb
 end
 node.set[:mongodb][:use_fqdn] = false
 
-if node[:instance][:layers].include?("mongo")
+if node[:opsworks][:instance][:layers].include?("mongo")
 	#i am a mongo instance
 	node.set[:mongodb][:dbpath] = "/vol/mongodb"
 	node.set[:mongodb][:journalpath] = "/vol/mongodb/journal"
-elsif node[:instance][:layers].include?("arbiter")
+elsif node[:opsworks][:instance][:layers].include?("arbiter")
 	# i am only an arbiter
 	node.set[:mongodb][:smallfiles] = true
 end

@@ -99,7 +99,11 @@ class Chef
             "members" => node['mongodb']['use_fqdn'] == false ? rs_member_ips : rs_members
         }
 
-        Chef::Log.info("cmd: #{cmd}")
+        Chef::Log.info("rs_members: #{rs_members.inspect()}")
+        Chef::Log.info("rs_member_ips: #{rs_member_ips.inspect()}")
+        Chef::Log.info("replicaset_members: #{node['mongodb']['replicaset_members'].inspect()}")
+        Chef::Log.info("cmd: #{cmd.inspect()}")
+        Chef::Log.info("node: #{node.inspect()}")
 
         begin
           result = admin.command(cmd, :check_response => false)

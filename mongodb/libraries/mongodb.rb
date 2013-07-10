@@ -113,6 +113,7 @@ class Chef
         end
         if result.fetch("ok", nil) == 1
           # everything is fine, do nothing
+          Chef::Log.info("Replicationset initalised with: #{cmd.inspect}")
         elsif result.fetch("errmsg", nil) =~ %r/(\S+) is already initiated/ || (result.fetch("errmsg", nil) == "already initialized")
           server,port = $1.nil? ? ['localhost',node['mongodb']['port']] : $1.split(":")
           begin
@@ -136,7 +137,11 @@ class Chef
             members_add = rs_members - old_members
             members_add.each do |m|
               max_id += 1
-              config['members'] << {"_id" => max_id, "host" => m}
+              if node['mongodb']['replicaset_arbiters'].include?(m)
+                config['members'] << {"_id" => max_id, "host" => m, "arbiterOnly" => true}
+              else 
+                config['members'] << {"_id" => max_id, "host" => m}
+              end
             end
 
             rs_connection = nil

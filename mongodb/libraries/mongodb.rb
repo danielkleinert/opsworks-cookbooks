@@ -78,11 +78,11 @@ class Chef
       elsif node['mongodb']['replicaset_members'] != nil
         # We have defined members to include. Need to add to the array.
         node['mongodb']['replicaset_members'].each_with_index do |address, index|
-          if index == 0
-            rs_member_ips << {"_id" => index + rs_members.count, "host" => "#{address}:#{node['mongodb']['port']}", "arbiterOnly" => true}
-          else
+          #if index == 0
+          #  rs_member_ips << {"_id" => index + rs_members.count, "host" => "#{address}:#{node['mongodb']['port']}", "arbiterOnly" => true}
+          #else
             rs_member_ips << {"_id" => index + rs_members.count, "host" => "#{address}:#{node['mongodb']['port']}"}
-          end
+          #end
         end
       end
 
@@ -99,10 +99,10 @@ class Chef
             "members" => node['mongodb']['use_fqdn'] == false ? rs_member_ips : rs_members
         }
 
-        Chef::Log.info("rs_members: #{rs_members.inspect()}")
-        Chef::Log.info("rs_member_ips: #{rs_member_ips.inspect()}")
-        Chef::Log.info("replicaset_members: #{node['mongodb']['replicaset_members'].inspect()}")
-        Chef::Log.info("cmd: #{cmd.inspect()}")
+        Chef::Log.info("rs_members: #{rs_members.inspect}")
+        Chef::Log.info("rs_member_ips: #{rs_member_ips.inspect}")
+        Chef::Log.info("replicaset_members: #{node['mongodb']['replicaset_members'].inspect}")
+        Chef::Log.info("cmd: #{cmd.inspect}")
 
         begin
           result = admin.command(cmd, :check_response => false)

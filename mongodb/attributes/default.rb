@@ -33,6 +33,7 @@ default[:mongodb][:client_roles] = []
 default[:mongodb][:cluster_name] = nil
 default[:mongodb][:replicaset_name] = nil
 default[:mongodb][:replicaset_members] = nil
+default[:mongodb][:replicaset_arbiters] = nil
 default[:mongodb][:shard_name] = "default"
 
 default[:mongodb][:auto_configure][:replicaset] = true

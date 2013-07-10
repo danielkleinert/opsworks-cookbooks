@@ -78,11 +78,12 @@ class Chef
       elsif node['mongodb']['replicaset_members'] != nil
         # We have defined members to include. Need to add to the array.
         node['mongodb']['replicaset_members'].each_with_index do |address, index|
-          #if index == 0
-          #  rs_member_ips << {"_id" => index + rs_members.count, "host" => "#{address}:#{node['mongodb']['port']}", "arbiterOnly" => true}
-          #else
-            rs_member_ips << {"_id" => index + rs_members.count, "host" => "#{address}:#{node['mongodb']['port']}"}
-          #end
+          rs_member_ips << {"_id" => index, "host" => "#{address}:#{node['mongodb']['port']}"}
+        end
+        if node['mongodb']['replicaset_arbiters'] != nil
+          node['mongodb']['replicaset_arbiters'].each_with_index do |address, index|
+            rs_member_ips << {"_id" => index +  node['mongodb']['replicaset_arbiters'].count, "host" => "#{address}:#{node['mongodb']['port']}", "arbiterOnly" => true}
+          end
         end
       end
 

@@ -56,9 +56,9 @@ class Chef
 
       rs_member_ips = []
 
-      if node['mongodb']['replicaset_members'] != nil and Chef::Config[:solo]
-        node.set['mongodb']['replicaset_members'] << node['mongodb']['bind_ip'] unless node['mongodb']['replicaset_members'].include?(node['mongodb']['bind_ip'])
-      end
+      #if node['mongodb']['replicaset_members'] != nil and Chef::Config[:solo]
+      #  node.set['mongodb']['replicaset_members'] << node['mongodb']['n'] unless node['mongodb']['replicaset_members'].include?(node['mongodb']['bind_ip'])
+      #end
 
       if not Chef::Config[:solo]
         members.each_index do |n|
@@ -103,7 +103,6 @@ class Chef
         Chef::Log.info("rs_member_ips: #{rs_member_ips.inspect()}")
         Chef::Log.info("replicaset_members: #{node['mongodb']['replicaset_members'].inspect()}")
         Chef::Log.info("cmd: #{cmd.inspect()}")
-        Chef::Log.info("node: #{node.inspect()}")
 
         begin
           result = admin.command(cmd, :check_response => false)

@@ -26,6 +26,7 @@ cron "backup_mongodb" do
 	command %Q{
 		backup/mongo_backup.py --awskeys #{node[:aws_access_id]}:#{node[:aws_access_key]} --mount #{node[:mongodb][:dbpath]}
 	} #--verbose --dryrun
-end=end
+end
+=end 
 
 

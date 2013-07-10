@@ -21,11 +21,9 @@ cron "backup_mongodb" do
 	minute "0"
 	hour "0"
 	day "*"
-	user "opscode"
-	home "/srv/opscode-community-site/shared/system"
 	command %Q{
 		backup/mongo_backup.py --awskeys #{node[:aws_access_id]}:#{node[:aws_access_key]} --mount #{node[:mongodb][:dbpath]}
-	} #--verbose --dryrun
+	} 
 end
 =end 
 

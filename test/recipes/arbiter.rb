@@ -12,4 +12,4 @@ node.set[:mongodb][:smallfiles] = true
 #node.set[:mongodb][:journalpath] = "/vol/mongodb/journal"
 node.set[:mongodb][:use_fqdn] = false
 
-include_recipe "mongodb::mongodb"
+include_recipe "mongodb::default"

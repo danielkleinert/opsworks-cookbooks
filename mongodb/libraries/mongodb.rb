@@ -82,7 +82,7 @@ class Chef
         end
         if node['mongodb']['replicaset_arbiters'] != nil
           node['mongodb']['replicaset_arbiters'].each_with_index do |address, index|
-            rs_member_ips << {"_id" => index +  node['mongodb']['replicaset_arbiters'].count, "host" => "#{address}:#{node['mongodb']['port']}", "arbiterOnly" => true}
+            rs_member_ips << {"_id" => index +  node['mongodb']['replicaset_members'].count, "host" => "#{address}:#{node['mongodb']['port']}", "arbiterOnly" => true}
           end
         end
       end

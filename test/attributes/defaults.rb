@@ -10,11 +10,12 @@ node.set[:mongodb][:use_fqdn] = false
 
 if node[:opsworks][:instance][:layers].include?("mongo")
 	#i am a mongo instance
-	node.set[:mongodb][:dbpath] = "/vol/mongodb"
-	node.set[:mongodb][:journalpath] = "/vol/mongodb/journal"
+	set[:mongodb][:dbpath] = "/vol/mongodb"
+	set[:mongodb][:journalpath] = "/vol/mongodb/journal"
 elsif node[:opsworks][:instance][:layers].include?("arbiter")
 	# i am only an arbiter
-	node.set[:mongodb][:smallfiles] = true
+	set[:mongodb][:smallfiles] = true
+	set['mongodb']['auto_configure']['replicaset'] = false
 end
 
 

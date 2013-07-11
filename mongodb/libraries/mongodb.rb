@@ -100,21 +100,23 @@ class Chef
             "members" => node['mongodb']['use_fqdn'] == false ? rs_member_ips : rs_members
         }
 
-        Chef::Log.info("rs_members: #{rs_members.inspect}")
-        Chef::Log.info("rs_member_ips: #{rs_member_ips.inspect}")
-        Chef::Log.info("replicaset_members: #{node['mongodb']['replicaset_members'].inspect}")
-        Chef::Log.info("cmd: #{cmd.inspect}")
+        Chef::Log.debug("rs_members: #{rs_members.inspect}")
+        Chef::Log.debug("rs_member_ips: #{rs_member_ips.inspect}")
+        Chef::Log.debug("replicaset_members: #{node['mongodb']['replicaset_members'].inspect}")
+        Chef::Log.debug("replicaset_arbiters: #{node['mongodb']['replicaset_arbiters'].inspect}")
 
         begin
+          Chef::Log.info("Running command: #{cmd.inspect}")
           result = admin.command(cmd, :check_response => false)
+          Chef::Log.info("Command returned: #{result.inspect}")
         rescue Mongo::OperationTimeout
           Chef::Log.info("Started configuring the replicaset, this will take some time, another run should run smoothly")
           return
         end
         if result.fetch("ok", nil) == 1
           # everything is fine, do nothing
-          Chef::Log.info("Replicationset initalised with: #{cmd.inspect}")
         elsif result.fetch("errmsg", nil) =~ %r/(\S+) is already initiated/ || (result.fetch("errmsg", nil) == "already initialized")
+          
           server,port = $1.nil? ? ['localhost',node['mongodb']['port']] : $1.split(":")
           begin
             connection = Mongo::Connection.new(server, port, :op_timeout => 5, :slave_ok => true)
@@ -123,15 +125,16 @@ class Chef
           end
           # check if both configs are the same
           config = connection['local']['system']['replset'].find_one({"_id" => name})
-          if config['_id'] == name and (config['members'] == rs_members or config['members'] == rs_member_ips)
+          Chef::Log.info("Current config of Replicaset '#{name}': #{config.inspect}")
+          old_members = config['members'].collect{ |member| member['host'] }
+          rs_member_ips.collect!{ |member| member['host'] }
+          if config['_id'] == name and (old_members == rs_member_ips)
             # config is up-to-date, do nothing
-            Chef::Log.info("Replicaset '#{name}' already configured")
+            Chef::Log.info("Replicaset '#{name}' already up to date.")
           else
             # remove removed members from the replicaset and add the new ones
             max_id = config['members'].collect{ |member| member['_id']}.max
-            rs_member_ips.collect!{ |member| member['host'] }
             config['version'] += 1
-            old_members = config['members'].collect{ |member| member['host'] }
             members_delete = old_members - rs_members
             config['members'] = config['members'].delete_if{ |m| members_delete.include?(m['host']) }
             members_add = rs_members - old_members
@@ -156,6 +159,7 @@ class Chef
 
             result = nil
             begin
+              Chef::Log.info("Reconfiguring Replicaset with: #{cmd.inspect}")
               result = admin.command(cmd, :check_response => false)
             rescue Mongo::ConnectionFailure
               # reconfiguring destroys exisiting connections, reconnect

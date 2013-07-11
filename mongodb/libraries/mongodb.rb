@@ -128,7 +128,7 @@ class Chef
           Chef::Log.info("Current config of Replicaset '#{name}': #{config.inspect}")
           old_members = config['members'].collect{ |member| member['host'] }
           rs_member_ips.collect!{ |member| member['host'] }
-          arbiter_ips = node['mongodb']['replicaset_arbiters'].map{ |m| "#{m}:node['mongodb']['port']" }
+          arbiter_ips = node['mongodb']['replicaset_arbiters'].map{ |m| "#{m}:#{node['mongodb']['port']}" }
           if config['_id'] == name and (old_members == rs_member_ips)
             # config is up-to-date, do nothing
             Chef::Log.info("Replicaset '#{name}' already up to date.")
@@ -139,6 +139,8 @@ class Chef
             members_delete = old_members - rs_members
             config['members'] = config['members'].delete_if{ |m| members_delete.include?(m['host']) }
             members_add = rs_members - old_members
+            Chef::Log.debug("arbiter_ips: #{arbiter_ips.inspect}")
+            Chef::Log.debug("members_add: #{members_add.inspect}")
             members_add.each do |m|
               max_id += 1
               if arbiter_ips != nil and arbiter_ips.include?(m)

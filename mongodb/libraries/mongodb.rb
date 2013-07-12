@@ -100,11 +100,6 @@ class Chef
             "members" => node['mongodb']['use_fqdn'] == false ? rs_member_ips : rs_members
         }
 
-        Chef::Log.debug("rs_members: #{rs_members.inspect}")
-        Chef::Log.debug("rs_member_ips: #{rs_member_ips.inspect}")
-        Chef::Log.debug("replicaset_members: #{node['mongodb']['replicaset_members'].inspect}")
-        Chef::Log.debug("replicaset_arbiters: #{node['mongodb']['replicaset_arbiters'].inspect}")
-
         begin
           Chef::Log.info("Running command: #{cmd.inspect}")
           result = admin.command(cmd, :check_response => false)
@@ -139,8 +134,6 @@ class Chef
             members_delete = old_members - rs_members
             config['members'] = config['members'].delete_if{ |m| members_delete.include?(m['host']) }
             members_add = rs_members - old_members
-            Chef::Log.debug("arbiter_ips: #{arbiter_ips.inspect}")
-            Chef::Log.debug("members_add: #{members_add.inspect}")
             members_add.each do |m|
               max_id += 1
               if arbiter_ips != nil and arbiter_ips.include?(m)

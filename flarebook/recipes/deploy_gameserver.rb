@@ -3,7 +3,11 @@ include_recipe "flarebook::update_gameserver_config"
 deploy = node[:deploy][:gameserver]
 application = :gameserver
 
-link "#{deploy[:deploy_to]}/src/nodejs/config.json" do
+if deploy[:auto_npm_install_on_deploy]
+	OpsWorks::NodejsConfiguration.npm_install(application, node[:deploy][application], "#{deploy[:deploy_to]}/current/src/nodejs/")
+end
+
+link "#{deploy[:deploy_to]}/current/src/nodejs/config.json" do
   	to "#{deploy[:deploy_to]}/shared/config/gameserver_config.json"
 end
 

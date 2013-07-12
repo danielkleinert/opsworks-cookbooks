@@ -11,13 +11,14 @@ template "#{deploy[:deploy_to]}/shared/config/gameserver_config.json" do
     variables(
     	:mongoip => node[:mongodb][:replicaset_members].to_json, 
     	:master_mongoip => node[:mongodb][:replicaset_members].to_json, 
-    	:mongoreplset => node[:mongodb][:replicaset_name])
-		:master_mongoreplset => node[:mongodb][:replicaset_name])
-		:live => node[:deploy][:gameserver][:live])
-		:rccheckerip => node[:deploy][:gameserver][:rccheckerip])
-		:boardurl => node[:deploy][:gameserver][:boardurl])
-		:serverid => node[:deploy][:gameserver][:serverid])
-		:masterurl => node[:deploy][:gameserver][:masterurl])
+    	:mongoreplset => node[:mongodb][:replicaset_name],
+		:master_mongoreplset => node[:mongodb][:replicaset_name],
+		:live => node[:deploy][:gameserver][:live],
+		:rccheckerip => node[:deploy][:gameserver][:rccheckerip],
+		:boardurl => node[:deploy][:gameserver][:boardurl],
+		:serverid => node[:deploy][:gameserver][:serverid],
+		:masterurl => node[:deploy][:gameserver][:masterurl]
+	)
 end
 
 ruby_block "restart node.js application #{application}" do

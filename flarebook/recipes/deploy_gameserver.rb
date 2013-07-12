@@ -1,4 +1,4 @@
-include_recipe "update_gameserver_config"
+include_recipe "flarebook::update_gameserver_config"
 
 deploy = node[:deploy][:gameserver]
 application = :gameserver

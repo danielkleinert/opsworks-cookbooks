@@ -18,7 +18,7 @@ elsif node[:opsworks][:instance][:layers].include?("arbiter")
 	set['mongodb']['auto_configure']['replicaset'] = false
 end
 
-
+# TODO: this does not work!
 default[:deploy][:gameserver][:main_script] = 'main_gok.js'
 
 default[:gameserver][:live] = 0
@@ -27,6 +27,13 @@ default[:gameserver][:serverid] = node[:opsworks][:stack][:name]
 default[:gameserver][:masterurl] = nil
 # Needs load balancer; set via stack json!
 default[:gameserver][:boardurl] = nil  
+
+
+default[:forum][:mbname] = nil
+default[:forum][:language] = "english"
+default[:forum][:boardurl] = nil
+default[:forum][:webmaster_email] = nil
+default[:forum][:db_name] = "smf_board"
 
 
 

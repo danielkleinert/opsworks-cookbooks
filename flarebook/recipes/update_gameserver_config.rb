@@ -13,11 +13,11 @@ template "#{deploy[:deploy_to]}/shared/config/gameserver_config.json" do
     	:master_mongoip => node[:mongodb][:replicaset_members].to_json, 
     	:mongoreplset => node[:mongodb][:replicaset_name],
 		:master_mongoreplset => node[:mongodb][:replicaset_name],
-		:live => node[:deploy][:gameserver][:live],
-		:rccheckerip => node[:deploy][:gameserver][:rccheckerip],
-		:boardurl => node[:deploy][:gameserver][:boardurl],
-		:serverid => node[:deploy][:gameserver][:serverid],
-		:masterurl => node[:deploy][:gameserver][:masterurl]
+		:live => node[:gameserver][:live],
+		:rccheckerip => node[:gameserver][:rccheckerip],
+		:boardurl => node[:gameserver][:boardurl],
+		:serverid => node[:gameserver][:serverid],
+		:masterurl => node[:gameserver][:masterurl]
 	)
 end
 

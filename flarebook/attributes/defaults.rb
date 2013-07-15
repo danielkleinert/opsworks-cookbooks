@@ -20,12 +20,12 @@ end
 
 
 default[:deploy][:gameserver][:main_script] = 'main_gok.js'
-default[:deploy][:gameserver][:live] = 1
-default[:deploy][:gameserver][:rccheckerip] = nil
-default[:deploy][:gameserver][:serverid] = nil
-default[:deploy][:gameserver][:masterurl] = nil
+default[:gameserver][:live] = 0
+default[:gameserver][:rccheckerip] = nil
+default[:gameserver][:serverid] = node[:opsworks][:stack][:name]
+default[:gameserver][:masterurl] = nil
 # Needs load balancer; set via stack json!
-default[:deploy][:gameserver][:boardurl] = nil  
+default[:gameserver][:boardurl] = nil  
 
 
 

@@ -1,8 +1,10 @@
+include_recipe 'apache2::service'
+
 deploy = node[:deploy][:forum]
 application = :forum
 
 template "#{deploy[:deploy_to]}/shared/config/Settings.php" do
-    source 'bord_settings.php.erb'
+    source 'forum_settings.php.erb'
     mode '0660'
     owner deploy[:user]
     group deploy[:group]
@@ -19,4 +21,5 @@ template "#{deploy[:deploy_to]}/shared/config/Settings.php" do
 		:db_mongo_db => "",
 		:db_mongo_replset => node[:mongodb][:replicaset_name],
 	)
+	notifies :restart, resources(:service => 'apache2'), :delayed
 end

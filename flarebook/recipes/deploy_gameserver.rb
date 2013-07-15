@@ -4,12 +4,12 @@ deploy = node[:deploy][:gameserver]
 application = :gameserver
 
 link "#{deploy[:deploy_to]}/current/src/nodejs/config.json" do
-  	user "deploy"
+  	owner "deploy"
   	to "#{deploy[:deploy_to]}/shared/config/gameserver_config.json"
 end
 
-link "#{deploy[:deploy_to]}/current/src/nodejs/log/" do
-  	user "deploy"
+link "#{deploy[:deploy_to]}/current/src/nodejs/logs" do
+  	owner "deploy"
   	to "#{deploy[:deploy_to]}/shared/log/"
 end
 
@@ -24,7 +24,7 @@ end
 bash "initialise database" do 
 	cwd "#{deploy[:deploy_to]}/current/src/nodejs/"
 	code <<-EOH
-		/usr/bin/env NODE_PATH=#{deploy[:deploy_to]}/current/src/nodejs/node_modules:#{deploy[:deploy_to]}/current/src/nodejs /usr/local/bin/node --max-stack-size=65535 -- #{deploy[:deploy_to]}/current/src/nodejs/#{eploy[:main_script] install}
+		/usr/bin/env NODE_PATH=#{deploy[:deploy_to]}/current/src/nodejs/node_modules:#{deploy[:deploy_to]}/current/src/nodejs /usr/local/bin/node --max-stack-size=65535 -- #{deploy[:deploy_to]}/current/src/nodejs/#{deploy[:main_script]} install}
 	EOH
 end 
 

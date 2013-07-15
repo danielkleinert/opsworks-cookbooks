@@ -20,6 +20,7 @@ end
 
 
 default[:deploy][:gameserver][:main_script] = 'main_gok.js'
+
 default[:gameserver][:live] = 0
 default[:gameserver][:rccheckerip] = nil
 default[:gameserver][:serverid] = node[:opsworks][:stack][:name]
@@ -37,5 +38,4 @@ default[:gameserver][:boardurl] = nil
 # set[:deploy][:cloudwatch][:group] = "root"
 # set[:deploy][:cloudwatch][:home] = "/root"
 # default[:deploy][application][:stack][:needs_reload] = true
-
 

@@ -4,6 +4,7 @@
 	include_recipe 'apache2::service'
 
 	deploy = node[:deploy][:forum]
+	mongos = [:mongodb][:replicaset_members].join(',') rescue ''
 
 	template "#{deploy[:deploy_to]}/shared/config/Settings.php" do
 	    source 'forum_settings.php.erb'
@@ -19,7 +20,7 @@
 			:db_name => deploy[:database][:database],
 			:db_user => deploy[:database][:username],
 			:db_passwd => deploy[:database][:password],
-			:db_mongo_server => [:mongodb][:replicaset_members].join(',') rescue '',
+			:db_mongo_server => mongos,
 			:db_mongo_db => "kd2_mnt",
 			:db_mongo_replset => node[:mongodb][:replicaset_name]
 		)

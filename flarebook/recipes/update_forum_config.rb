@@ -22,7 +22,8 @@
 			:db_passwd => deploy[:database][:password],
 			:db_mongo_server => mongos,
 			:db_mongo_db => "kd2_mnt",
-			:db_mongo_replset => node[:mongodb][:replicaset_name]
+			:db_mongo_replset => node[:mongodb][:replicaset_name],
+			:base_dir => "#{deploy[:deploy_to]}/current/src/php"
 		)
 		notifies :restart, resources(:service => 'apache2'), :delayed
 	end

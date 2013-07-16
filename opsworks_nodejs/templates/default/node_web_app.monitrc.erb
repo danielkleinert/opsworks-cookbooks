@@ -1,7 +1,7 @@
 check host node_web_app_<%= @application_name %> with address 127.0.0.1
-  start program = "/bin/bash -c 'cd <%= @deploy[:deploy_to] %>/current/src/nodejs/; /usr/bin/env NODE_PATH=<%= @deploy[:deploy_to] %>/current/src/nodejs/node_modules:<%= @deploy[:deploy_to] %>/current/src/nodejs /usr/local/bin/node --max-stack-size=65535 -- <%= @deploy[:deploy_to] %>/current/src/nodejs/main_gok.js'"
-  stop program  = "/usr/bin/pkill -F '/var/run/current/node.pid'"
+  start program = "/bin/bash -c 'cd <%= @deploy[:deploy_to] %>/current/src/nodejs/; /usr/bin/env NODE_PATH=<%= @deploy[:deploy_to] %>/current/src/nodejs/node_modules:<%= @deploy[:deploy_to] %>/current/src/nodejs /usr/local/bin/node --max-stack-size=65535 -- <%= @deploy[:deploy_to] %>/current/src/nodejs/main_gok.js --pidname node_server'"
+  stop program  = "kill $(cat /var/run/node_server.pid)'"
   if failed port 80 protocol HTTP
     request /
-    with timeout 10 seconds
+    with timeout 30 seconds
     then restart

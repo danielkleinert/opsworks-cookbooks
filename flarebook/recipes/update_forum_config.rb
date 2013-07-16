@@ -19,8 +19,8 @@
 			:db_name => deploy[:database][:database],
 			:db_user => deploy[:database][:username],
 			:db_passwd => deploy[:database][:password],
-			:db_mongo_server => "",
-			:db_mongo_db => "",
+			:db_mongo_server => [:mongodb][:replicaset_members].join(',') rescue '',
+			:db_mongo_db => "kd2_mnt",
 			:db_mongo_replset => node[:mongodb][:replicaset_name]
 		)
 		notifies :restart, resources(:service => 'apache2'), :delayed

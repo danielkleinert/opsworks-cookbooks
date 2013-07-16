@@ -22,11 +22,6 @@ elsif node[:opsworks][:instance][:layers].include?("arbiter")
 end
 
 #
-# MySQL
-#
-set[:mysql][:datadir] = "/vol/mysql"
-
-#
 # Gameserver
 #
 # TODO: this does not work!

@@ -24,7 +24,7 @@ end
 # bash "initialise database" do 
 # 	cwd "#{deploy[:deploy_to]}/current/src/nodejs/"
 # 	code <<-EOH
-# 		/usr/bin/env NODE_PATH=#{deploy[:deploy_to]}/current/src/nodejs/node_modules:#{deploy[:deploy_to]}/current/src/nodejs /usr/local/bin/node --max-stack-size=65535 -- #{deploy[:deploy_to]}/current/src/nodejs/#{deploy[:main_script]} --cmd install
+# 		/usr/bin/env NODE_PATH=#{deploy[:deploy_to]}/current/src/nodejs/node_modules:#{deploy[:deploy_to]}/current/src/nodejs /usr/local/bin/node --max-stack-size=65535 -- #{deploy[:deploy_to]}/current/src/nodejs/#{node[:gameserver][:main_script]} --cmd install
 # 	EOH
 # end 
 

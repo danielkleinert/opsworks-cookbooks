@@ -32,6 +32,7 @@ set[:mysql][:datadir] = "/vol/mysql"
 # TODO: this does not work!
 #default[:deploy][:gameserver][:main_script] = 'main_gok.js'
 
+default[:gameserver][:main_script] = 'main_gok.js'
 default[:gameserver][:live] = 0
 default[:gameserver][:rccheckerip] = nil
 default[:gameserver][:serverid] = node[:opsworks][:stack][:name]

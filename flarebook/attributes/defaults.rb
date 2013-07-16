@@ -1,3 +1,6 @@
+#
+# Nodejs
+#
 set[:mongodb][:cluster_name] = "game"
 set[:mongodb][:replicaset_name] = "game"
 if node[:opsworks][:layers][:mongo] != 0 and not node[:opsworks][:layers][:mongo][:instances].empty?
@@ -18,8 +21,16 @@ elsif node[:opsworks][:instance][:layers].include?("arbiter")
 	set['mongodb']['auto_configure']['replicaset'] = false
 end
 
+#
+# MySQL
+#
+set[:mysql][:datadir] = "/vol/mysql"
+
+#
+# Gameserver
+#
 # TODO: this does not work!
-default[:deploy][:gameserver][:main_script] = 'main_gok.js'
+#default[:deploy][:gameserver][:main_script] = 'main_gok.js'
 
 default[:gameserver][:live] = 0
 default[:gameserver][:rccheckerip] = nil
@@ -28,7 +39,9 @@ default[:gameserver][:masterurl] = nil
 # Needs load balancer; set via stack json!
 default[:gameserver][:boardurl] = nil  
 
-
+#
+# Bord
+#
 default[:forum][:mbname] = nil
 default[:forum][:language] = "english"
 default[:forum][:boardurl] = nil

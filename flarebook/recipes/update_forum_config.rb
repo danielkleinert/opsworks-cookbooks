@@ -1,5 +1,4 @@
-
-#if node[:deploy].attribute?(:forum)
+if node[:deploy].attribute?(:forum)
 
 	include_recipe 'apache2::service'
 
@@ -28,4 +27,4 @@
 		notifies :restart, resources(:service => 'apache2'), :delayed
 	end
 
-#end
+end

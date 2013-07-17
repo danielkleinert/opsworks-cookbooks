@@ -1,0 +1,38 @@
+from diskusage import DiskUsage
+from utility import get_my_ec2_instance
+from memcached import Memcached
+from mongodb import MongoDB
+from system import System
+
+aws_access_key_id = "<%= @aws_access_key_id %>"
+aws_secret_access_key = "<%= @aws_secret_access_key %>"
+
+update_interval = <%= @update_interval %>  # in minutes
+
+project_name = "<%= @namespace %>"  # aka the namespace
+instance_id = get_my_ec2_instance()
+modules = [
+<% if monitor_memcached %>
+    {'dimensions': {"InstanceId": instance_id, "Module": "memcached"},
+     'module': Memcached(),
+     'publish_metrics': Memcached.AVAILABLE_METRICS},
+<% end %>
+
+<% if monitor_mongo %>
+    {'dimensions': {"InstanceId": instance_id, "Module": "MongoDB"},
+     'module': MongoDB(),
+     'publish_metrics': MongoDB.AVAILABLE_METRICS},
+<% end %>
+
+<% if monitor_mem %>
+    {'dimensions': {"InstanceId": instance_id, "Module": "System"},
+     'module': System(),
+     'publish_metrics': ['FreeableMemory', 'SwapUsage']},
+<% end %>
+
+<% for @path in @disk_usage_paths %>
+    {'dimensions': {"InstanceId": instance_id, "Module": "HDD: <%= @path %>"},
+     'module': DiskUsage("<%= @path %>"),
+     'publish_metrics': ['Capacity']},
+<% end %>     
+]

@@ -32,7 +32,7 @@ if node[:deploy].attribute?(:cloudwatch)
         :monitor_memcached => node[:cloudwatch][:monitor_memcached],
         :monitor_mongo => node[:cloudwatch][:monitor_mongo],
         :monitor_mem => node[:cloudwatch][:monitor_mem],
-        :disk_usage_paths => node[:cloudwatch][:disk_usage_paths],
+        :disk_usage_paths => node[:cloudwatch][:disk_usage_paths]
     )
   end
 

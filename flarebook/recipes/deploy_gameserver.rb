@@ -27,7 +27,7 @@ if node[:deploy].attribute?(:gameserver)
 		owner "root"
 		group "root"
 		mode "0755"
-		code <<-EOH
+		content <<-EOH
 			#!/bin/sh
 			/usr/bin/env NODE_PATH=#{deploy[:deploy_to]}/current/src/nodejs/node_modules:#{deploy[:deploy_to]}/current/src/nodejs \
 			/usr/local/bin/node --max-stack-size=65535 -- #{deploy[:deploy_to]}/current/src/nodejs/#{node[:gameserver][:main_script]} \

@@ -1,5 +1,6 @@
-cookbook_file "/root/backup.py " do
-  path "ebs_snapshot.py"
+cookbook_file "/root/backup.py" do
+  source "ebs_snapshot.py"
+  mode 0755
   action :create_if_missing
 end
 

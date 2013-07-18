@@ -7,7 +7,7 @@ when 'debian', 'ubuntu'
     'dstat',
     'iftop',
     'ec2-api-tools',
-    'build-essentials',
+    'build-essential',
     'python-pip',
     'mercurial'
   ]

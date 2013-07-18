@@ -23,8 +23,8 @@ end
 template "/root/cloudwatch/settings.py" do
   source 'settings.py.erb'
   mode '0660'
-  owner node[:deploy][:cloudwatch][:user]
-  group node[:deploy][:cloudwatch][:group]
+  owner "root"
+  group "root"
   variables(
       :aws_access_key_id => node[:awsaccess][:aws_access_key_id],
       :aws_secret_access_key => node[:awsaccess][:aws_secret_access_key],

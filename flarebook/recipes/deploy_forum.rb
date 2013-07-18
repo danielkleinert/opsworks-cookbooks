@@ -3,7 +3,6 @@ if node[:deploy].attribute?(:forum)
 	include_recipe "flarebook::update_forum_config"
 	include_recipe 'apache2::service'
 
-	deploy = node[:deploy][:forum]
 	application = :forum
 
 	template "#{node[:apache][:dir]}/sites-available/#{application}.conf.d/local.conf" do
@@ -14,9 +13,9 @@ if node[:deploy].attribute?(:forum)
 		mode 0644
 	end
 
-	link "#{deploy[:deploy_to]}/current/src/php/Settings.php" do
+	link "#{node[:deploy][:forum][:deploy_to]}/current/src/php/Settings.php" do
 	 	owner "deploy"
-	 	to "#{deploy[:deploy_to]}/shared/config/Settings.php"
+	 	to "#{node[:deploy][:forum][:deploy_to]}/shared/config/Settings.php"
 	 	notifies :restart, resources(:service => 'apache2'), :delayed
 	end
 

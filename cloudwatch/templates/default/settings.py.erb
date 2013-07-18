@@ -12,19 +12,19 @@ update_interval = <%= @update_interval %>  # in minutes
 project_name = "<%= @namespace %>"  # aka the namespace
 instance_id = get_my_ec2_instance()
 modules = [
-<% if monitor_memcached %>
+<% if @monitor_memcached %>
     {'dimensions': {"InstanceId": instance_id, "Module": "memcached"},
      'module': Memcached(),
      'publish_metrics': Memcached.AVAILABLE_METRICS},
 <% end %>
 
-<% if monitor_mongo %>
+<% if @monitor_mongo %>
     {'dimensions': {"InstanceId": instance_id, "Module": "MongoDB"},
      'module': MongoDB(),
      'publish_metrics': MongoDB.AVAILABLE_METRICS},
 <% end %>
 
-<% if monitor_mem %>
+<% if @monitor_mem %>
     {'dimensions': {"InstanceId": instance_id, "Module": "System"},
      'module': System(),
      'publish_metrics': ['FreeableMemory', 'SwapUsage']},

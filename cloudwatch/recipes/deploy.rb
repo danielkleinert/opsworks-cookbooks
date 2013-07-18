@@ -2,7 +2,8 @@ include_recipe 'deploy'
 
 if node[:deploy].attribute?(:cloudwatch)
 
-  deploy = node[:deploy][:cloudwatch]
+  # this fucks up chef pretty hard!
+  #deploy = node[:deploy][:cloudwatch]
 
   if node[:opsworks][:instance][:layers].include?('mongo')
     bash 'install pymongo' do
@@ -14,16 +15,16 @@ if node[:deploy].attribute?(:cloudwatch)
   end
 
   opsworks_deploy_dir do
-    user deploy[:user]
-    group deploy[:group]
-    path deploy[:deploy_to]
+    user node[:deploy][:cloudwatch][:user]
+    group node[:deploy][:cloudwatch][:group]
+    path node[:deploy][:cloudwatch][:deploy_to]
   end
 
-  template "#{deploy[:deploy_to]}/shared/config/settings.py" do
+  template "#{node[:deploy][:cloudwatch][:deploy_to]}/shared/config/settings.py" do
     source 'settings.py.erb'
     mode '0660'
-    owner deploy[:user]
-    group deploy[:group]
+    owner node[:deploy][:cloudwatch][:user]
+    group node[:deploy][:cloudwatch][:group]
     variables(
         :aws_access_key_id => node[:cloudwatch][:aws_access_key_id],
         :aws_secret_access_key => node[:cloudwatch][:aws_secret_access_key],
@@ -36,10 +37,14 @@ if node[:deploy].attribute?(:cloudwatch)
     )
   end
 
-  deploy[:symlink_before_migrate]['#{deploy[:deploy_to]}/current/settings.py'] = "#{deploy[:deploy_to]}/shared/config/settings.py"
+  #deploy[:symlink_before_migrate]['#{deploy[:deploy_to]}/current/settings.py'] = "#{deploy[:deploy_to]}/shared/config/settings.py"
+
+  Chef::Log.info("deploy[:group]: #{deploy[:group]}")
+  Chef::Log.info("deploy[:user]: #{deploy[:user]}")
+  Chef::Log.info("deploy: #{deploy.inspect}")
 
   opsworks_deploy do
-    deploy_data deploy
+    deploy_data node[:deploy][:cloudwatch]
     app :cloudwatch
   end
 
@@ -54,8 +59,8 @@ if node[:deploy].attribute?(:cloudwatch)
     group 'root'
     mode '0644'
     variables(
-      :deploy => deploy,
-      :monitored_script => "#{deploy[:deploy_to]}/current/server.js"
+      :deploy => node[:deploy][:cloudwatch],
+      :monitored_script => "#{node[:deploy][:cloudwatch][:deploy_to]}/current/server.js"
     )
     notifies :restart, resources(:service => 'monit'), :immediately
   end

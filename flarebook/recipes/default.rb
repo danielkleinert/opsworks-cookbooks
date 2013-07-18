@@ -11,6 +11,7 @@ when 'debian', 'ubuntu'
     'python-pip',
     'mercurial'
   ]
+end
 
 packages.each do |pkg|
   package pkg do

@@ -20,7 +20,6 @@ bash "Configuration of maximum number of open file descriptors" do
   EOF
 end 
 
-monitored_paths = Pathname.new("/vol").children.select { |c| c.directory? }.collect { |p| p.to_s } rescue []
 
 template "/root/cloudwatch/settings.py" do
   source 'settings.py.erb'
@@ -35,7 +34,7 @@ template "/root/cloudwatch/settings.py" do
       :monitor_memcached => node[:cloudwatch][:monitor_memcached],
       :monitor_mongo => node[:cloudwatch][:monitor_mongo],
       :monitor_mem => node[:cloudwatch][:monitor_mem],
-      :disk_usage_paths => 
+      :disk_usage_paths => node[:cloudwatch][:disk_usage_paths]
   )
 end
 

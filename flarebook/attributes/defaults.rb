@@ -44,14 +44,8 @@ default[:forum][:boardurl] = nil
 default[:forum][:webmaster_email] = nil
 default[:forum][:db_name] = "smf_board"
 
-
-
-# set[:deploy][:cloudwatch][:deploy_to] = '/opt/cloudwatch'
-# set[:deploy][:cloudwatch][:release_path] = "#{node[:deploy][:cloudwatch][:deploy_to]}/releases/#{node[:deploy][:cloudwatch][:release]}"
-# set[:deploy][:cloudwatch][:current_path] = "#{node[:deploy][:cloudwatch][:deploy_to]}/current"
-# set[:deploy][:cloudwatch][:absolute_document_root] = "#{default[:deploy][:cloudwatch][:current_path]}/"
-# set[:deploy][:cloudwatch][:user] = "root"
-# set[:deploy][:cloudwatch][:group] = "root"
-# set[:deploy][:cloudwatch][:home] = "/root"
-# default[:deploy][application][:stack][:needs_reload] = true
-
+#
+# Backup
+#
+default[:backup][:mysql_pw] = node[:mysql][:server_root_password]
+default[:backup][:mount_point] = node[:ebs][:devices].collect{|device_name, device| device[:mount_point]}.first rescue []

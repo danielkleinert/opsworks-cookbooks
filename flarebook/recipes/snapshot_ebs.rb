@@ -5,13 +5,12 @@ cookbook_file "/root/backup.py" do
 end
 
 command = "/root/backup.py --verbose --awskeys #{node[:awsaccess][:aws_access_key_id]}:#{node[:awsaccess][:aws_secret_access_key]} "
+command += "--mount #{node[:backup][:mount_point]} "
 if node[:opsworks][:instance][:layers].include?('mongo')
-	command += "--mount /vol/mongo "
 	command += "-l mongodb:slaveonly=true "
-elsif node[:opsworks][:instance][:layers].include?('db-master')
-	db_pw = node[:deploy][:forum][:database][:password]
-	command += "--mount /vol/mysql "
-	command += "-l mysql:user=root:password=#{db_pw} "
+end
+if node[:opsworks][:instance][:layers].include?('db-master') 
+	command += "-l mysql:user=root:password=#{node[:backup][:mysql_pw]} "
 end
 
 cron "backup" do

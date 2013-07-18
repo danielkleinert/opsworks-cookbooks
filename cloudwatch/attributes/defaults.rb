@@ -6,4 +6,4 @@ default[:cloudwatch][:namespace] = node[:opsworks][:stack][:name]
 default[:cloudwatch][:monitor_memcached] = false
 default[:cloudwatch][:monitor_mongo] = node[:opsworks][:instance][:layers].include?('mongo')
 default[:cloudwatch][:monitor_mem] = true
-default[:cloudwatch][:disk_usage_paths] = []
+default[:cloudwatch][:disk_usage_paths] = node[:ebs][:devices].collect{|device_name, device| device[:mount_point]} rescue []

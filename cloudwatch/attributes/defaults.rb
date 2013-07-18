@@ -1,7 +1,6 @@
 require "pathname"
 
-default[:cloudwatch][:aws_access_key_id] = nil
-default[:cloudwatch][:aws_secret_access_key] = nil
+default[:cloudwatch][:hg_repo] = nil
 default[:cloudwatch][:update_interval] = 2
 default[:cloudwatch][:namespace] = node[:opsworks][:stack][:name]
 default[:cloudwatch][:monitor_memcached] = false

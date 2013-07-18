@@ -1,0 +1,4 @@
+set logfile "/root/cloudwatch/monit.log"
+CHECK PROCESS cloudwatch MATCHING "/usr/bin/python /root/cloudwatch/cloudwatch.py"
+        start program = "/usr/bin/python /root/cloudwatch/cloudwatch.py"
+        stop program  = "/usr/bin/pkill -f '/usr/bin/python /root/cloudwatch/cloudwatch.py'"

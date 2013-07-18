@@ -33,6 +33,6 @@ modules = [
 <% for @path in @disk_usage_paths %>
     {'dimensions': {"InstanceId": instance_id, "Module": "HDD: <%= @path %>"},
      'module': DiskUsage("<%= @path %>"),
-     'publish_metrics': ['Capacity']},
+     'publish_metrics': ['Percent_Used']},
 <% end %>     
 ]

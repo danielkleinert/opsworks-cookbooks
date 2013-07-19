@@ -7,7 +7,6 @@ import logging
 import os
 import sys
 import urllib2
-from pymongo import MongoClient
 from boto.ec2.connection import EC2Connection
 from boto.utils import parse_ts
 from optparse import OptionParser

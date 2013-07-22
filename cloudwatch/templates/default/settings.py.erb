@@ -1,8 +1,8 @@
 from diskusage import DiskUsage
-from utility import get_my_ec2_instance
 from memcached import Memcached
 from mongodb import MongoDB
 from system import System
+import boto
 
 aws_access_key_id = "<%= @aws_access_key_id %>"
 aws_secret_access_key = "<%= @aws_secret_access_key %>"
@@ -10,7 +10,7 @@ aws_secret_access_key = "<%= @aws_secret_access_key %>"
 update_interval = <%= @update_interval %>  # in minutes
 
 project_name = "<%= @namespace %>"  # aka the namespace
-instance_id = get_my_ec2_instance()
+instance_id = boto.utils.get_instance_metadata()['instance-id']
 modules = [
 <% if @monitor_memcached %>
     {'dimensions': {"InstanceId": instance_id, "Module": "memcached"},

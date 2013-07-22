@@ -7,15 +7,12 @@ import logging
 import os
 import sys
 import urllib2
-from boto.ec2.connection import EC2Connection
+import boto
+from boto.ec2 import connect_to_region
 from boto.utils import parse_ts
 from optparse import OptionParser
 from subprocess import check_call
 from datetime import timedelta, datetime
-
-def get_ec2_metadata(key):
-    res = urllib2.urlopen("http://169.254.169.254/2008-02-01/meta-data/" + key)
-    return res.read().strip()
 
 def build_parser():
     parser = OptionParser(usage="Usage: %prog [options] <command> ...")
@@ -141,8 +138,9 @@ def backup(mount_point, aws_key, aws_secret_key, lockers=[], dryrun=False, keep_
     if devices[0].startswith("/dev/md"):
         devices = get_devices_for_raid(devices[0])
 
-    instance_id = get_ec2_metadata('instance-id')
-    ec2 = EC2Connection(aws_key, aws_secret_key)
+    instance_id = boto.utils.get_instance_metadata()['instance-id']
+    region = boto.utils.get_instance_metadata()['local-hostname'].split('.')[1]
+    ec2 = connect_to_region(region, aws_access_key_id=aws_key, aws_secret_access_key=aws_secret_key)
     instance = ec2.get_all_instances([instance_id])[0].instances[0]
     
     all_volumes = ec2.get_all_volumes()

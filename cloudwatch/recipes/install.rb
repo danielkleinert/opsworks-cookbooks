@@ -27,8 +27,8 @@ template "/root/cloudwatch/settings.py" do
   owner "root"
   group "root"
   variables(
-      :aws_access_key_id => node[:awsaccess][:aws_access_key_id],
-      :aws_secret_access_key => node[:awsaccess][:aws_secret_access_key],
+      :aws_access_key_id => node[:cloudwatch][:aws_access_key_id],
+      :aws_secret_access_key => node[:cloudwatch][:aws_secret_access_key],
       :namespace => node[:cloudwatch][:namespace],
       :update_interval => node[:cloudwatch][:update_interval],
       :monitor_memcached => node[:cloudwatch][:monitor_memcached],

@@ -4,7 +4,7 @@ cookbook_file "/root/backup.py" do
   action :create_if_missing
 end
 
-command = "/root/backup.py --verbose --awskeys #{node[:awsaccess][:aws_access_key_id]}:#{node[:awsaccess][:aws_secret_access_key]} "
+command = "/root/backup.py --verbose --awskeys #{node[:backup][:aws_access_key_id]}:#{node[:backup][:aws_secret_access_key]} "
 command += "--mount #{node[:backup][:mount_point]} "
 if node[:opsworks][:instance][:layers].include?('mongo')
 	command += "-l mongodb:slaveonly=true "

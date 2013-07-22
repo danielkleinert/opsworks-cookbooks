@@ -49,3 +49,6 @@ default[:forum][:db_name] = "smf_board"
 #
 default[:backup][:mysql_pw] = node[:mysql][:server_root_password]
 default[:backup][:mount_point] = node[:ebs][:devices].collect{|device_name, device| device[:mount_point]}.first rescue []
+default[:backup][:aws_access_key_id] = nil
+default[:backup][:aws_secret_access_key] = nil
+

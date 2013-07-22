@@ -24,8 +24,7 @@ end
 #
 # Gameserver
 #
-# TODO: this does not work!
-#default[:deploy][:gameserver][:main_script] = 'main_gok.js'
+
 
 default[:gameserver][:main_script] = 'main_gok.js'
 default[:gameserver][:live] = 0
@@ -34,6 +33,11 @@ default[:gameserver][:serverid] = node[:opsworks][:stack][:name]
 default[:gameserver][:masterurl] = nil
 # Needs load balancer; set via stack json!
 default[:gameserver][:boardurl] = nil  
+
+if node[:deploy] != 0 and node[:deploy][:gameserver] != 0
+	set[:deploy][:gameserver][:nodejs][:restart_command] = "monit restart node_game_server; monit restart node_maintainance_server"
+	set[:deploy][:gameserver][:nodejs][:stop_command] = "monit stop node_game_server; monit stop node_maintainance_server"
+end
 
 #
 # Bord

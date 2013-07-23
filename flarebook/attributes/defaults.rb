@@ -4,10 +4,10 @@
 set[:mongodb][:cluster_name] = "game"
 set[:mongodb][:replicaset_name] = "game"
 if node[:opsworks][:layers][:mongo] != 0 and not node[:opsworks][:layers][:mongo][:instances].empty?
-	set[:mongodb][:replicaset_members] = node[:opsworks][:layers][:mongo][:instances].values.map{ |instance| instance[:private_dns_name]}
+	set[:mongodb][:replicaset_members] = node[:opsworks][:layers][:mongo][:instances].keys()
 end
 if node[:opsworks][:layers][:arbiter] != 0 and not node[:opsworks][:layers][:arbiter][:instances].empty?
-	set[:mongodb][:replicaset_arbiters] = node[:opsworks][:layers][:arbiter][:instances].values.map{ |instance| instance[:private_dns_name]}
+	set[:mongodb][:replicaset_arbiters] = node[:opsworks][:layers][:arbiter][:instances].keys()
 end
 node.set[:mongodb][:use_fqdn] = false
 

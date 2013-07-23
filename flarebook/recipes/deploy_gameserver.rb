@@ -38,7 +38,7 @@ if node[:deploy].attribute?(:gameserver)
 		content <<-EOH
 			#!/bin/sh
 			/usr/bin/env NODE_PATH=#{deploy[:deploy_to]}/current/src/nodejs/node_modules:#{deploy[:deploy_to]}/current/src/nodejs \
-			/usr/local/bin/node --max-stack-size=65535 -- #{deploy[:deploy_to]}/current/src/nodejs/#{node[:gameserver][:main_script]} \
+			/usr/bin/node --max-stack-size=65535 -- #{deploy[:deploy_to]}/current/src/nodejs/#{node[:gameserver][:main_script]} \
 			--cmd install
 		EOH
 		action :create

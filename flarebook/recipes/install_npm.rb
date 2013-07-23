@@ -1,7 +1,3 @@
-package "node" do
-	action :purge
-end
-
 execute "apt-get update" do
     action :nothing
 end
@@ -14,11 +10,6 @@ apt_repository "node-legacy" do
     key "C7917B12"
     action :add
     notifies :run, resources(:execute => "apt-get update"), :immediately
-end
-
-
-package "node" do
-	action :install
 end
 
 package "npm" do

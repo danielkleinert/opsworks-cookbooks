@@ -1,8 +1,8 @@
 #
 # Nodejs
 #
-default[:opsworks_nodejs][:deb] = "nodejs_0.8.25-1chl1~precise1_amd64.deb"
-default[:opsworks_nodejs][:deb_url] = "http://ppa.launchpad.net/chris-lea/node.js-legacy/ubuntu/pool/main/n/nodejs/nodejs_0.8.25-1chl1~precise1_amd64.deb"
+set[:opsworks_nodejs][:deb] = "nodejs_0.8.25-1chl1~precise1_amd64.deb"
+set[:opsworks_nodejs][:deb_url] = "http://ppa.launchpad.net/chris-lea/node.js-legacy/ubuntu/pool/main/n/nodejs/nodejs_0.8.25-1chl1~precise1_amd64.deb"
 
 set[:mongodb][:cluster_name] = "game"
 set[:mongodb][:replicaset_name] = "game"

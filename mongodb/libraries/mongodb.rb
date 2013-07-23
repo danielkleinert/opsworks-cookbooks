@@ -131,8 +131,8 @@ class Chef
             # remove removed members from the replicaset and add the new ones
             max_id = config['members'].collect{ |member| member['_id']}.max
             config['version'] += 1
-            members_delete = old_members - rs_members
-            config['members'] = config['members'].delete_if{ |m| members_delete.include?(m['host']) }
+            #members_delete = old_members - rs_members
+            #config['members'] = config['members'].delete_if{ |m| members_delete.include?(m['host']) }
             members_add = rs_members - old_members
             members_add.each do |m|
               max_id += 1

@@ -1,6 +1,10 @@
 #
 # Nodejs
 #
+
+default[:opsworks_nodejs][:deb] = "nodejs_0.8.25-1chl1~precise1_amd64.deb"
+default[:opsworks_nodejs][:deb_url] = "http://ppa.launchpad.net/chris-lea/node.js-legacy/ubuntu/pool/main/n/nodejs/nodejs_0.8.25-1chl1~precise1_amd64.deb"
+
 set[:mongodb][:cluster_name] = "game"
 set[:mongodb][:replicaset_name] = "game"
 if node[:opsworks][:layers][:mongo] != 0 and not node[:opsworks][:layers][:mongo][:instances].empty?
@@ -24,8 +28,6 @@ end
 #
 # Gameserver
 #
-
-
 default[:gameserver][:main_script] = 'main_gok.js'
 default[:gameserver][:memcacheip] = node[:opsworks][:layers]["nodejs-app"][:instances].values.map{ |instance| instance[:private_dns_name]} rescue []
 default[:gameserver][:live] = 0

@@ -23,6 +23,14 @@ if node[:deploy].attribute?(:gameserver)
 		end	
 	end
 
+	bash "installing native npm dependency mongodb" do
+	  user "root"
+	  cwd "#{deploy[:deploy_to]}/current/src/nodejs"
+	  code <<-EOF
+		npm install mongodb@1.2.14 '--mongodb:native'
+	  EOF
+	end
+
 	file "#{deploy[:deploy_to]}/current/src/nodejs/install.sh" do
 		owner "root"
 		group "root"

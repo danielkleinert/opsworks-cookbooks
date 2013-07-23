@@ -28,7 +28,9 @@ end
 # Gameserver
 #
 default[:gameserver][:main_script] = 'main_gok.js'
-default[:gameserver][:memcacheip] = node[:opsworks][:layers]["nodejs-app"][:instances].values.map{ |instance| instance[:private_dns_name]} rescue []
+# Bug in node package
+#default[:gameserver][:memcacheip] = node[:opsworks][:layers]["nodejs-app"][:instances].values.map{ |instance| instance[:private_dns_name]} rescue []
+default[:gameserver][:memcacheip] = ["localhost"]
 default[:gameserver][:live] = 0
 default[:gameserver][:rccheckerip] = nil
 default[:gameserver][:serverid] = node[:opsworks][:stack][:name]

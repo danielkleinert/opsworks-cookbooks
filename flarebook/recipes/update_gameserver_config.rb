@@ -15,6 +15,7 @@ if node[:deploy].attribute?(:gameserver)
 	    	:master_mongoip => node[:mongodb][:replicaset_members].to_json, 
 	    	:mongoreplset => node[:mongodb][:replicaset_name],
 			:master_mongoreplset => node[:mongodb][:replicaset_name],
+			:memcacheip => node[:gameserver][:memcacheip].to_json,
 			:live => node[:gameserver][:live],
 			:rccheckerip => node[:gameserver][:rccheckerip],
 			:boardurl => node[:gameserver][:boardurl],

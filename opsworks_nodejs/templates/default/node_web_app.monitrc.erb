@@ -3,7 +3,7 @@ check host node_game_server with address 127.0.0.1
   stop program  = "/bin/bash -c 'kill $(cat /var/run/node_game_server.pid)'"
   if failed port 80 protocol HTTP
     request /
-    with timeout 10 seconds
+    with timeout 60 seconds
     then restart
 
 check host node_maintainance_server with address 127.0.0.1
@@ -11,5 +11,5 @@ check host node_maintainance_server with address 127.0.0.1
   stop program  = "/bin/bash -c 'kill $(cat /var/run/node_maintainance_server.pid)'"
   if failed port 81 protocol HTTP
     request /
-    with timeout 10 seconds
+    with timeout 60 seconds
     then restart

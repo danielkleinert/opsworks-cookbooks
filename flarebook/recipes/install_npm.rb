@@ -15,3 +15,8 @@ end
 package "npm" do
 	action :install
 end
+
+link "/usr/local/bin/node" do
+    owner "root"
+    to "/usr/bin/nodejs"
+end

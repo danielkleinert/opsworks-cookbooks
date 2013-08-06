@@ -17,7 +17,7 @@ if node[:deploy].attribute?(:forum)
 	    bash "change owner of #{node[:deploy][:forum][:deploy_to]}/current/src/php/#{dir}" do
 		  user "root"
 		  code <<-EOF
-			chmod -R www_data #{node[:deploy][:forum][:deploy_to]}/current/src/php/#{dir}
+			chown -R www-data #{node[:deploy][:forum][:deploy_to]}/current/src/php/#{dir}
 		  EOF
 		end
 	end

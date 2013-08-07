@@ -2,7 +2,7 @@ if node[:deploy].attribute?(:forum)
 
 	include_recipe 'apache2::service'
 
-	mongos = [:mongodb][:replicaset_members].join(',') rescue ''
+	mongos = node[:mongodb][:replicaset_members].join(',') rescue ''
 
 	template "#{node[:deploy][:forum][:deploy_to]}/shared/config/Settings.php" do
 	    source 'forum_settings.php.erb'

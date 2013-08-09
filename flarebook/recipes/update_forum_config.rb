@@ -1,5 +1,10 @@
 if node[:deploy].attribute?(:forum)
 
+	execute "smfupdate" do
+		command "#{node[:deploy][:forum][:deploy_to]}/current/src/php/smfupdate.php"
+		action :nothing
+	end
+
 	include_recipe 'apache2::service'
 
 	mongos = node[:mongodb][:replicaset_members].join(',') rescue ''
@@ -24,6 +29,7 @@ if node[:deploy].attribute?(:forum)
 			:base_dir => "#{node[:deploy][:forum][:deploy_to]}/current/src/php"
 		)
 		notifies :restart, resources(:service => 'apache2'), :delayed
+		notifies :restart, execute[smfdeploy], :delayed
 	end
 
 end

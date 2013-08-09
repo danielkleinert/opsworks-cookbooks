@@ -5,6 +5,12 @@ if node[:deploy].attribute?(:gameserver)
 	deploy = node[:deploy][:gameserver]
 	application = :gameserver
 
+	#hack for legacy live server
+	serverid = node[:gameserver][:serverid]
+	if serverid == "tw-us-vir-1"
+		serverid = "live"	
+	end
+
 	template "#{deploy[:deploy_to]}/shared/config/gameserver_config.json" do
 	    source 'gameserver_config.json.erb'
 	    mode '0660'
@@ -19,7 +25,7 @@ if node[:deploy].attribute?(:gameserver)
 			:live => node[:gameserver][:live],
 			:rccheckerip => node[:gameserver][:rccheckerip],
 			:boardurl => node[:gameserver][:boardurl],
-			:serverid => node[:gameserver][:serverid],
+			:serverid => serverid,
 			:masterurl => node[:gameserver][:masterurl]
 		)
 	end

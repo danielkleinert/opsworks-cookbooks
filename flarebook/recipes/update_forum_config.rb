@@ -1,7 +1,7 @@
 if node[:deploy].attribute?(:forum)
 
 	execute "smfupdate" do
-		command "#{node[:deploy][:forum][:deploy_to]}/current/src/php/smfupdate.php"
+		command "/usr/bin/php #{node[:deploy][:forum][:deploy_to]}/current/src/php/smfupdate.php"
 		action :nothing
 	end
 
@@ -29,7 +29,7 @@ if node[:deploy].attribute?(:forum)
 			:base_dir => "#{node[:deploy][:forum][:deploy_to]}/current/src/php"
 		)
 		notifies :restart, resources(:service => 'apache2'), :delayed
-		notifies :restart, execute[smfdeploy], :delayed
+		notifies :restart, 'execute[smfdeploy]', :delayed
 	end
 
 end

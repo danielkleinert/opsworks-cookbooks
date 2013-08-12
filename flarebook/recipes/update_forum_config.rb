@@ -1,7 +1,7 @@
 if node[:deploy].attribute?(:forum)
 
 	execute 'smfupdate' do
-		command '/usr/bin/php #{node[:deploy][:forum][:deploy_to]}/current/src/php/smfupdate.php'
+		command "/usr/bin/php #{node[:deploy][:forum][:deploy_to]}/current/src/php/smfupdate.php"
 		action :nothing
 	end
 

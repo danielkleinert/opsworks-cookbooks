@@ -29,7 +29,7 @@ if node[:deploy].attribute?(:forum)
 			:base_dir => "#{node[:deploy][:forum][:deploy_to]}/current/src/php"
 		)
 		notifies :restart, resources(:service => 'apache2'), :delayed
-		notifies :run, 'execute[smfupdate]', :delayed
+		notifies :run, resources(:execute => "clear_cache"), :delayed
 	end
 
 end

@@ -10,6 +10,9 @@ if node[:deploy].attribute?(:gameserver)
 	if serverid == "tw-us-vir-1"
 		serverid = "live"	
 	end
+	
+	#another hack for memcached
+	memcacheip = node[:gameserver][:serverid] + '-game1'
 
 	template "#{deploy[:deploy_to]}/shared/config/gameserver_config.json" do
 	    source 'gameserver_config.json.erb'
@@ -21,7 +24,7 @@ if node[:deploy].attribute?(:gameserver)
 	    	:master_mongoip => node[:mongodb][:replicaset_members].to_json, 
 	    	:mongoreplset => node[:mongodb][:replicaset_name],
 			:master_mongoreplset => node[:mongodb][:replicaset_name],
-			:memcacheip => node[:gameserver][:memcacheip].to_json,
+			:memcacheip => memcacheip,
 			:live => node[:gameserver][:live],
 			:rccheckerip => node[:gameserver][:rccheckerip],
 			:boardurl => node[:gameserver][:boardurl],

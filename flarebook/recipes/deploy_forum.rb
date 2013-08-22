@@ -13,7 +13,7 @@ if node[:deploy].attribute?(:forum)
 		mode 0644
 	end
 
-	["attachments", "avatars", "cache", "nbproject"].each do |dir|
+	["attachments", "avatars", "cache"].each do |dir|
 	    bash "change owner of #{node[:deploy][:forum][:deploy_to]}/current/src/php/#{dir}" do
 		  user "root"
 		  code <<-EOF

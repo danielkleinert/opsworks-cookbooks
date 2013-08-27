@@ -139,7 +139,7 @@ def backup(mount_point, aws_key, aws_secret_key, lockers=[], dryrun=False, keep_
         devices = get_devices_for_raid(devices[0])
 
     instance_id = boto.utils.get_instance_metadata()['instance-id']
-    region = boto.utils.get_instance_metadata()['local-hostname'].split('.')[1]
+    region = boto.utils.get_instance_metadata()['placement']['availability-zone'][:-1]
     ec2 = connect_to_region(region, aws_access_key_id=aws_key, aws_secret_access_key=aws_secret_key)
     instance = ec2.get_all_instances([instance_id])[0].instances[0]
     

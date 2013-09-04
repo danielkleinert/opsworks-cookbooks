@@ -5,7 +5,6 @@ check host node_game_server with address 127.0.0.1
     request /serverinfos/
     with timeout 60 seconds
     then restart
-  if 3 restarts within 5 cycles then exec "/usr/bin/pkill -KILL -f '<%= @deploy[:deploy_to] %>/current/src/nodejs/main_gok.js --pidname node_game_server'"
 
 check host node_maintainance_server with address 127.0.0.1
   start program = "/bin/bash -c 'cd <%= @deploy[:deploy_to] %>/current/src/nodejs/; /usr/bin/env NODE_PATH=<%= @deploy[:deploy_to] %>/current/src/nodejs/node_modules:<%= @deploy[:deploy_to] %>/current/src/nodejs /usr/bin/node --max-stack-size=65535 -- <%= @deploy[:deploy_to] %>/current/src/nodejs/maintenance.js --pidname node_maintainance_server'"

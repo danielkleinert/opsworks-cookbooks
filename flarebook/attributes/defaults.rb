@@ -1,10 +1,3 @@
-#
-# Nodejs
-#
-
-set[:opsworks_nodejs][:version] = "0.8.26"
-set[:opsworks_nodejs][:deb] = "nodejs_0.8.26-1chl1~precise1_amd64.deb"
-set[:opsworks_nodejs][:deb_url] = "http://ppa.launchpad.net/chris-lea/node.js-legacy/ubuntu/pool/main/n/nodejs/nodejs_0.8.26-1chl1~precise1_amd64.deb"
 
 set[:mongodb][:cluster_name] = "game"
 set[:mongodb][:replicaset_name] = "game"
@@ -33,6 +26,12 @@ default[:gameserver][:main_script] = 'main_gok.js'
 # Bug in node package
 #default[:gameserver][:memcacheip] = node[:opsworks][:layers]["nodejs-app"][:instances].values.map{ |instance| instance[:private_dns_name]} rescue []
 default[:gameserver][:memcacheip] = ["localhost"]
+
+# See if there is a memcached layer present
+if node[:opsworks][:layers][:memcached] != 0 and not node[:opsworks][:layers][:memcached][:instances].empty?
+	set[:gameserver][:memcacheip] = node[:opsworks][:layers][:memcached][:instances].keys()
+end
+
 default[:gameserver][:live] = 0
 default[:gameserver][:rccheckerip] = nil
 default[:gameserver][:serverid] = node[:opsworks][:stack][:name]

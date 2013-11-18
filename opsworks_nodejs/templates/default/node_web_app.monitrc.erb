@@ -1,5 +1,5 @@
 check host node_game_server with address 127.0.0.1
-  start program = "/bin/bash -c 'cd <%= @deploy[:deploy_to] %>/current/src/nodejs/; /usr/bin/env NODE_PATH=<%= @deploy[:deploy_to] %>/current/src/nodejs/node_modules:<%= @deploy[:deploy_to] %>/current/src/nodejs /usr/bin/node --max-stack-size=65535 -- <%= @deploy[:deploy_to] %>/current/src/nodejs/main_gok.js --pidname node_game_server'"
+  start program = "/bin/bash -c 'cd <%= @deploy[:deploy_to] %>/current/src/nodejs/; /usr/bin/env NODE_PATH=<%= @deploy[:deploy_to] %>/current/src/nodejs/node_modules:<%= @deploy[:deploy_to] %>/current/src/nodejs /usr/local/bin/node --max-stack-size=65535 -- <%= @deploy[:deploy_to] %>/current/src/nodejs/main_gok.js --pidname node_game_server'"
   stop program  = "/usr/bin/pkill -f '<%= @deploy[:deploy_to] %>/current/src/nodejs/main_gok.js --pidname node_game_server'"
   if failed port 80 protocol HTTP
     request /serverinfos/
@@ -7,7 +7,7 @@ check host node_game_server with address 127.0.0.1
     then restart
 
 check host node_maintainance_server with address 127.0.0.1
-  start program = "/bin/bash -c 'cd <%= @deploy[:deploy_to] %>/current/src/nodejs/; /usr/bin/env NODE_PATH=<%= @deploy[:deploy_to] %>/current/src/nodejs/node_modules:<%= @deploy[:deploy_to] %>/current/src/nodejs /usr/bin/node --max-stack-size=65535 -- <%= @deploy[:deploy_to] %>/current/src/nodejs/maintenance.js --pidname node_maintainance_server'"
+  start program = "/bin/bash -c 'cd <%= @deploy[:deploy_to] %>/current/src/nodejs/; /usr/bin/env NODE_PATH=<%= @deploy[:deploy_to] %>/current/src/nodejs/node_modules:<%= @deploy[:deploy_to] %>/current/src/nodejs /usr/local/bin/node --max-stack-size=65535 -- <%= @deploy[:deploy_to] %>/current/src/nodejs/maintenance.js --pidname node_maintainance_server'"
   stop program  = "/usr/bin/pkill -f '<%= @deploy[:deploy_to] %>/current/src/nodejs/maintenance.js --pidname node_maintainance_server'"
   if failed port 81 protocol HTTP
     request /
@@ -15,7 +15,7 @@ check host node_maintainance_server with address 127.0.0.1
     then restart
 
 check host node_exec_server with address 127.0.0.1
-  start program = "/bin/bash -c 'cd <%= @deploy[:deploy_to] %>/current/src/nodejs/; /usr/bin/env NODE_PATH=<%= @deploy[:deploy_to] %>/current/src/nodejs/node_modules:<%= @deploy[:deploy_to] %>/current/src/nodejs /usr/bin/node --max-stack-size=65535 -- <%= @deploy[:deploy_to] %>/current/src/nodejs/executor.js --pidname node_exec_server'"
+  start program = "/bin/bash -c 'cd <%= @deploy[:deploy_to] %>/current/src/nodejs/; /usr/bin/env NODE_PATH=<%= @deploy[:deploy_to] %>/current/src/nodejs/node_modules:<%= @deploy[:deploy_to] %>/current/src/nodejs /usr/local/bin/node --max-stack-size=65535 -- <%= @deploy[:deploy_to] %>/current/src/nodejs/executor.js --pidname node_exec_server'"
   stop program  = "/usr/bin/pkill -f '<%= @deploy[:deploy_to] %>/current/src/nodejs/executor.js --pidname node_exec_server'"
   if failed port 82 protocol HTTP
     request /?action=ping

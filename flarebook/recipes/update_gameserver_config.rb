@@ -11,6 +11,11 @@ if node[:deploy].attribute?(:gameserver)
 		serverid = "live"	
 	end
 	
+	service node['rsyslog']['service_name'] do
+    supports :restart => true, :reload => true, :status => true
+    action   [:enable, :start]
+  end
+	
 	#another hack for memcached
 	memcacheip = node[:gameserver][:serverid] + '-game1'
 

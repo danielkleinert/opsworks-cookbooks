@@ -63,6 +63,6 @@ default[:backup][:aws_secret_access_key] = nil
 
 # rsyslogd
 default['rsyslog']['priv_seperation'] = false
-default['rsyslog']['remote_srv_host'] = "127.0.0.1"
+default['rsyslog']['remote_srv_host'] = "rsyslogd-tw.trackingflaregames.net"
 default['rsyslog']['remote_srv_port'] = 3076
 

@@ -40,7 +40,7 @@ if node[:deploy].attribute?(:gameserver)
     mode    '0644'
     variables (
     :deploy => deploy,
-    :rsyslog_srv_host => node['rsyslog']['remote_srv_host']
+    :rsyslog_srv_host => node['rsyslog']['remote_srv_host'],
     :rsyslog_srv_port => node['rsyslog']['remote_srv_port']
     )
     notifies :restart, "service[#{node['rsyslog']['service_name']}]"

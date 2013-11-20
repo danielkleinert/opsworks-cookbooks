@@ -34,6 +34,7 @@ if node[:deploy].attribute?(:gameserver)
 			:rccheckerip => node[:gameserver][:rccheckerip],
 			:boardurl => node[:gameserver][:boardurl],
 			:serverid => serverid,
+			:hostname => node[:opsworks][:instance][:hostname],
 			:masterurl => node[:gameserver][:masterurl]
 		)
 	end

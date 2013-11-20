@@ -61,3 +61,8 @@ default[:backup][:mount_point] = node[:ebs][:devices].collect{|device_name, devi
 default[:backup][:aws_access_key_id] = nil
 default[:backup][:aws_secret_access_key] = nil
 
+# rsyslogd
+default['rsyslog']['priv_seperation'] = false
+default['rsyslog']['remote_srv_host'] = "127.0.0.1"
+default['rsyslog']['remote_srv_port'] = 3076
+

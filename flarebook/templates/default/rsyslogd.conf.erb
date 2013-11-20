@@ -1,0 +1,12 @@
+$ModLoad imfile
+
+$Ruleset ngs_send
+*.* @<<%= @rsyslog_srv_host %>:<%= @rsyslog_srv_port %>>
+
+$InputFileName <<%= @deploy[:deploy_to] %>/current/src/nodejs/logs/access.log>
+$InputFileTag ngs_access:
+$InputFileStateFile ngs_access
+$InputFileBindRuleset ngs_send
+$InputRunFileMonitor
+
+$InputFilePollInterval 5

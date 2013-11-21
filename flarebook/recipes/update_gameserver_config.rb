@@ -59,6 +59,15 @@ if node[:deploy].attribute?(:gameserver)
     mode    '0644'
     notifies :restart, "service[#{node['rsyslog']['service_name']}]"
   end  
+  
+  template "/etc/logrotate.d/opsworks_app_#{application}" do
+    backup false
+    source "logrotate_gameserver.erb"
+    owner "root"
+    group "root"
+    mode 0644
+    variables( :log_dirs => ["#{deploy[:deploy_to]}/shared/log" ] )
+  end
 
 	ruby_block "restart node.js application #{application}" do
 		block do

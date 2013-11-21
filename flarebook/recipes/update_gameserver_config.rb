@@ -63,6 +63,7 @@ if node[:deploy].attribute?(:gameserver)
   template "/etc/logrotate.d/opsworks_app_#{application}" do
     backup false
     source "logrotate_gameserver.erb"
+    cookbook 'flarebook'
     owner "root"
     group "root"
     mode 0644

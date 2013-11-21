@@ -2,6 +2,8 @@ require 'json'
 
 if node[:deploy].attribute?(:gameserver)
 
+  package 'rsyslog'
+
 	deploy = node[:deploy][:gameserver]
 	application = :gameserver
 
@@ -55,6 +57,7 @@ if node[:deploy].attribute?(:gameserver)
     owner   'root'
     group   'root'
     mode    '0644'
+    notifies :restart, "service[#{node['rsyslog']['service_name']}]"
   end  
 
 	ruby_block "restart node.js application #{application}" do
@@ -64,5 +67,10 @@ if node[:deploy].attribute?(:gameserver)
 		  $? == 0
 		end	
 	end
+	
+	service node['rsyslog']['service_name'] do
+    supports :restart => true, :reload => true, :status => true
+    action   :restart
+  end
 
 end

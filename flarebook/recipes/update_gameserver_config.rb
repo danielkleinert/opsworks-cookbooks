@@ -57,7 +57,6 @@ if node[:deploy].attribute?(:gameserver)
     owner   'root'
     group   'root'
     mode    '0644'
-    notifies :restart, "service[#{node['rsyslog']['service_name']}]"
   end  
   
   template "/etc/logrotate.d/opsworks_app_#{application}" do

@@ -28,8 +28,10 @@ default[:gameserver][:main_script] = 'main_gok.js'
 default[:gameserver][:memcacheip] = ["localhost"]
 
 # See if there is a memcached layer present
-if node[:opsworks][:layers][:memcached] != 0 and not node[:opsworks][:layers][:memcached][:instances].empty?
-	set[:gameserver][:memcacheip] = node[:opsworks][:layers][:memcached][:instances].keys()
+if node[:opsworks][:layers].attribute?(:memcached) 
+  if not node[:opsworks][:layers][:memcached][:instances].empty?
+	  set[:gameserver][:memcacheip] = node[:opsworks][:layers][:memcached][:instances].keys()
+  end
 end
 
 default[:gameserver][:live] = 0

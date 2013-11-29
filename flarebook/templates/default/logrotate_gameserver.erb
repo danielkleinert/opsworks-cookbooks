@@ -12,7 +12,7 @@
         copytruncate
         sharedscripts
 
-        post-rotate
+        postrotate
           restart rsyslog >/dev/null 2>&1 || true
         endscript
 }

@@ -44,11 +44,11 @@ default[:gameserver][:boardurl] = nil
 
 # Needs load balancer; set via stack json!
 default[:gameserver][:chatserverhost] = nil
-default[:gameserver][:chatserverserviceport] = 8045
+default[:gameserver][:chatserverserviceport] = 8005
 default[:gameserver][:chatserverport] = 80
 
-default[:chatserver][:chatserverport] = 8005
-default[:chatserver][:chatserverserviceport] = 8045
+default[:chatserver][:chatserverport] = 8045
+default[:chatserver][:chatserverserviceport] = 8005
 
 if node[:deploy] != 0 and node[:deploy][:gameserver]
 	set[:deploy][:gameserver][:nodejs][:restart_command] = "monit restart node_game_server; monit restart node_maintainance_server"

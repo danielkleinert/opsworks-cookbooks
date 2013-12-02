@@ -35,6 +35,7 @@ if node[:opsworks][:layers].attribute?(:memcached)
 end
 
 default[:gameserver][:live] = 0
+default[:gameserver][:cluster] = -4
 default[:gameserver][:rccheckerip] = nil
 default[:gameserver][:serverid] = node[:opsworks][:stack][:name]
 default[:gameserver][:masterurl] = nil

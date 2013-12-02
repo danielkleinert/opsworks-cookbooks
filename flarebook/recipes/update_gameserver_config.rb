@@ -33,6 +33,7 @@ if node[:deploy].attribute?(:gameserver)
 			:master_mongoreplset => node[:mongodb][:replicaset_name],
 			:memcacheip => node[:gameserver][:memcacheip].to_json,
 			:live => node[:gameserver][:live],
+			:cluster => node[:gameserver][:cluster],
 			:rccheckerip => node[:gameserver][:rccheckerip],
 			:boardurl => node[:gameserver][:boardurl],
 			:serverid => serverid,

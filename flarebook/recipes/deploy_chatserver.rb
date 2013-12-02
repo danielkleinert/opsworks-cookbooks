@@ -13,7 +13,8 @@ if node[:deploy].attribute?(:chatserver)
     variables(
       :deploy => deploy,
       :application_name => application,
-      :monitored_script => "#{deploy[:deploy_to]}/current/src/nodejs/main.js"
+      :monitored_script => "#{deploy[:deploy_to]}/current/src/nodejs/main.js",
+      :monitored_port => node['chatserver']['chatserverserviceport']
     )
     notifies :restart, resources(:service => 'monit'), :immediately
   end

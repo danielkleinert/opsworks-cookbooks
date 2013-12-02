@@ -17,5 +17,13 @@ if node[:deploy].attribute?(:chatserver)
     )
     notifies :restart, resources(:service => 'monit'), :immediately
   end
+  
+  ruby_block "install npm dependencies" do
+		block do
+			if deploy[:auto_npm_install_on_deploy]
+				OpsWorks::NodejsConfiguration.npm_install(application, deploy, "#{deploy[:deploy_to]}/current/src/nodejs")
+			end
+		end	
+	end
 
 end

@@ -19,6 +19,17 @@ if node[:deploy].attribute?(:chatserver)
     notifies :restart, resources(:service => 'monit'), :immediately
   end
   
+  template "#{deploy[:deploy_to]}/current/src/nodejs/config.json" do
+	    source 'chatserver_config.json.erb'
+	    mode '0660'
+	    owner deploy[:user]
+	    group deploy[:group]
+	    variables(
+    	:chatserverserviceport => node[:chatserver][:chatserverserviceport],
+    	:chatserverport => node[:chatserver][:chatserverport]
+		)
+	end
+  
   ruby_block "install npm dependencies" do
 		block do
 			if deploy[:auto_npm_install_on_deploy]

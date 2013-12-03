@@ -34,6 +34,13 @@ if node[:opsworks][:layers].attribute?(:memcached)
   end
 end
 
+# See if there is a Chatserver layer present
+if node[:opsworks][:layers].attribute?(:chatserver) 
+  if not node[:opsworks][:layers][:chatserver][:instances].empty?
+	  default[:gameserver][:chatserver_host_internal] = node[:opsworks][:layers][:chatserver][:instances].keys().first
+  end
+end
+
 default[:gameserver][:live] = 0
 default[:gameserver][:cluster] = -4
 default[:gameserver][:rccheckerip] = nil
@@ -42,8 +49,10 @@ default[:gameserver][:masterurl] = nil
 # Needs load balancer; set via stack json!
 default[:gameserver][:boardurl] = nil  
 
-# Needs load balancer; set via stack json!
-default[:gameserver][:chatserverhost] = nil
+
+#default[:gameserver][:chatserver_host_internal] = 
+# THis is the default host, may be overriden by stack config
+default[:gameserver][:chatserver_host_external] = "#{node[:opsworks][:stack][:name]}-chat.trackingflaregames.net"
 default[:gameserver][:chatserverserviceport] = 8005
 default[:gameserver][:chatserverport] = 80
 

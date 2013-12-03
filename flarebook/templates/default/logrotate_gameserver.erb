@@ -12,7 +12,11 @@
         copytruncate
         sharedscripts
 
-        postrotate
-          restart rsyslog >/dev/null 2>&1 || true
-        endscript
+        firstaction      
+			stop rsyslog      
+			rm -f /var/spool/rsyslog/ngs_access    
+		endscript    
+		lastaction      
+			start rsyslog    
+		endscript
 }

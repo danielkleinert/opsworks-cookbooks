@@ -55,7 +55,7 @@ if node[:deploy].attribute?(:gameserver)
     variables(
       :deploy => deploy,
       :application_name => application,
-      :monitored_script => "#{deploy[:deploy_to]}/current/src/nodejs/main_gok.js",
+      :monitored_script => "#{deploy[:deploy_to]}/current/src/nodejs/main_gok.js"
     )
     notifies :restart, resources(:service => 'monit'), :delayed
   end

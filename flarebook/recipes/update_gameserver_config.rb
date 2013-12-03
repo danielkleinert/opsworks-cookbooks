@@ -46,6 +46,20 @@ if node[:deploy].attribute?(:gameserver)
 		)
 	end
 	
+	template "#{node[:monit][:conf_dir]}/node_web_app-#{application}.monitrc" do
+    source 'gameserver.monitrc.erb'
+    cookbook 'flarebook'
+    owner 'root'
+    group 'root'
+    mode '0644'
+    variables(
+      :deploy => deploy,
+      :application_name => application,
+      :monitored_script => "#{deploy[:deploy_to]}/current/src/nodejs/main_gok.js",
+    )
+    notifies :restart, resources(:service => 'monit'), :delayed
+  end
+	
 	template "#{node['rsyslog']['config_prefix']}/rsyslog.d/60-node_game_server.conf" do
     source  'rsyslog_gameserver.conf.erb'
     owner   'root'

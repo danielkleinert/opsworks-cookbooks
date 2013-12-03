@@ -39,7 +39,8 @@ if node[:deploy].attribute?(:gameserver)
 			:serverid => serverid,
 			:hostname => node[:opsworks][:instance][:hostname],
 			:masterurl => node[:gameserver][:masterurl],
-			:chatserverhost => node[:gameserver][:chatserverhost],
+			:chatserver_host_internal => node[:gameserver][:chatserver_host_internal],
+			:chatserver_host_external => node[:gameserver][:chatserver_host_external],
     	:chatserverserviceport => node[:gameserver][:chatserverserviceport],
     	:chatserverport => node[:gameserver][:chatserverport]
 		)
